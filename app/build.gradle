@@ -23,8 +23,6 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     // Added for AdMob
     
-
-    compile project(':jokelib')
     compile project(':androidjokelib')
     compile 'com.android.support:appcompat-v7:22.2.0'
     compile 'com.google.android.gms:play-services:7.5.0'
