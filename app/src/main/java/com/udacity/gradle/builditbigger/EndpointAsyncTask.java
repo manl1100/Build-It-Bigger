@@ -21,11 +21,17 @@ import java.io.IOException;
 public class EndpointAsyncTask extends AsyncTask<Context, Void, String> {
     private static MyApi myApiService = null;
     private Context context;
+    private TaskListener taskListener;
 
 
     public static interface TaskListener {
 
-        void onCompleted();
+        void onCompleted(String response);
+    }
+
+    public EndpointAsyncTask setListener(TaskListener taskListener) {
+        this.taskListener = taskListener;
+        return this;
     }
 
     @Override
@@ -59,10 +65,9 @@ public class EndpointAsyncTask extends AsyncTask<Context, Void, String> {
 
     @Override
     protected void onPostExecute(String result) {
-        Intent intent = new Intent(context, JokeActivity.class);
-        intent.putExtra(JokeActivity.EXTRA_JOKE, result);
-        context.startActivity(intent);
-
-        Toast.makeText(context, result, Toast.LENGTH_LONG).show();
+        if (taskListener != null) {
+            taskListener.onCompleted(result);
+        }
     }
+
 }
