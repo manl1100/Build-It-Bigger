@@ -37,9 +37,3 @@ dependencies {
     compile 'com.google.android.gms:play-services:7.5.0'
     compile project(path: ':backend', configuration: 'android-endpoints')
 }
-
-task myTestTask {
-    dependsOn 'connectedAndroidTest'
-    mustRunAfter ':backend:appengineRun'
-    finalizedBy ':backend:appengineStop'
-}

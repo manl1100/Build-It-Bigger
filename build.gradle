@@ -17,3 +17,9 @@ allprojects {
         jcenter()
     }
 }
+
+task myTestTask {
+    dependsOn ':app:connectedAndroidTest'
+    mustRunAfter ':backend:appengineRun'
+    finalizedBy ':backend:appengineStop'
+}
