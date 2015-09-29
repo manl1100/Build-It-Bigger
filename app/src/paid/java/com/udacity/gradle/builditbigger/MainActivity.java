@@ -6,16 +6,21 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ProgressBar;
 
 import com.example.manuelsanchez.androidjokelib.JokeActivity;
 
 
 public class MainActivity extends ActionBarActivity implements EndpointAsyncTask.TaskListener {
 
+    private ProgressBar progressBar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        progressBar = (ProgressBar) findViewById(R.id.progressBar);
     }
 
 
@@ -43,12 +48,14 @@ public class MainActivity extends ActionBarActivity implements EndpointAsyncTask
 
     @Override
     public void onCompleted(String response) {
+        progressBar.setVisibility(View.GONE);
         Intent intent = new Intent(this, JokeActivity.class);
         intent.putExtra(JokeActivity.EXTRA_JOKE, response);
         startActivity(intent);
     }
 
     public void tellJoke(View view){
+        progressBar.setVisibility(View.VISIBLE);
         new EndpointAsyncTask()
                 .setListener(this)
                 .execute(this);
