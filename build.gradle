@@ -18,8 +18,13 @@ allprojects {
     }
 }
 
-task myTestTask {
-    dependsOn ':app:connectedAndroidTest'
-    mustRunAfter ':backend:appengineRun'
-    finalizedBy ':backend:appengineStop'
+task myTask {
+    dependsOn = [":backend:appengineRun", "app:connectedAndroidTest", ":backend:appengineStop"]
+    tasks.getByPath("app:connectedAndroidTest").shouldRunAfter ":backend:appengineRun"
+    tasks.getByPath(":backend:appengineStop").shouldRunAfter ":app:connectedAndroidTest"
+    project(":backend") {
+        appengine {
+            daemon true
+        }
+    }
 }
